@@ -1,0 +1,29 @@
+import { Routes } from '@angular/router';
+import { Home } from './features/home/home';
+import { Login } from './features/usuarios/login';
+import { Register } from './features/usuarios/register';
+import { InicioComponent } from './features/inicio/inicio.component';
+import { MeuPerfilComponent } from './features/meu-perfil/meu-perfil.component';
+import { AcervoComponent } from './features/acervo/acervo.component';
+import { MeusDesejosComponent } from './features/meus-desejos/meus-desejos.component';
+import { PendenciasComponent } from './features/pendencias/pendencias.component';
+import { SugestaoLeituraComponent } from './features/sugestao-leitura/sugestao-leitura.component';
+import { SobreComponent } from './features/sobre/sobre.component';
+import { CadastrarLivroComponent } from './features/admin/cadastrar-livro/cadastrar-livro.component';
+import { EditarLivroComponent } from './features/admin/editar-livro/editar-livro.component';
+
+export const routes: Routes = [
+  { path: '', component: Home },
+  { path: 'inicio', component: InicioComponent },
+  { path: 'login', component: Login },
+  { path: 'register', component: Register },
+  { path: 'sobre', component: SobreComponent },
+  { path: 'meu-perfil', component: MeuPerfilComponent },
+  { path: 'acervo', component: AcervoComponent },
+  { path: 'meus-desejos', component: MeusDesejosComponent },
+  { path: 'pendencias', component: PendenciasComponent },
+  { path: 'sugestao-leitura', component: SugestaoLeituraComponent },
+  { path: 'cadastrar-livro', component: CadastrarLivroComponent },
+  { path: 'editar-livro', component: EditarLivroComponent },
+  { path: '**', redirectTo: '' }
+];

@@ -1,0 +1,258 @@
+/* Fonte padrão deve vir antes de qualquer outra regra */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base global guiada pelo Tailwind (sem cores fixas em hex) */
+@layer base {
+  html { @apply font-sans text-neutral-dark; }
+  body { @apply bg-neutral-light; }
+  a { @apply font-medium no-underline; }
+}
+
+/* Modo Escuro - Inspirado em GitHub Dark */
+body.dark-mode {
+  background-color: #0d1117;
+  color: #c9d1d9;
+}
+
+/* Campo de Pesquisa no modo escuro */
+body.dark-mode .search-input,
+body.dark-mode .input-busca {
+  background: #0d1117;
+  color: #c9d1d9;
+  border-color: #30363d;
+}
+
+body.dark-mode .search-input::placeholder,
+body.dark-mode .input-busca::placeholder {
+  color: #8b949e;
+}
+
+body.dark-mode .search-input:focus,
+body.dark-mode .input-busca:focus {
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+}
+
+body.dark-mode .sidebar {
+  background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+  border-right-color: #21262d;
+  color: #c9d1d9;
+}
+
+body.dark-mode .sidebar-header h2,
+body.dark-mode .section-title,
+body.dark-mode .nav-item {
+  color: #c9d1d9;
+}
+
+body.dark-mode .sidebar-header {
+  border-bottom-color: #21262d;
+}
+
+body.dark-mode .nav-item:hover {
+  background: rgba(110, 118, 129, 0.1);
+}
+
+body.dark-mode .nav-item.active {
+  background: rgba(88, 166, 255, 0.15);
+}
+
+body.dark-mode .toggle-btn,
+body.dark-mode .toggle-btn-fixed,
+body.dark-mode .theme-toggle {
+  background: #161b22;
+  border-color: #30363d;
+  color: #c9d1d9;
+}
+
+body.dark-mode .toggle-btn:hover,
+body.dark-mode .toggle-btn-fixed:hover {
+  background: #1c2128;
+  border-color: #3d444d;
+}
+
+/* Cards e containers */
+body.dark-mode .livro-card,
+body.dark-mode .emprestimo-card,
+body.dark-mode .acervo-container,
+body.dark-mode .dashboard-container {
+  background-color: #161b22;
+  color: #c9d1d9;
+  border-color: #30363d;
+}
+
+body.dark-mode .header h1,
+body.dark-mode .info h3,
+body.dark-mode .welcome-title {
+  color: #f0f6fc;
+}
+
+body.dark-mode .subtitle,
+body.dark-mode .autor,
+body.dark-mode .genero,
+body.dark-mode .editora {
+  color: #8b949e;
+}
+
+body.dark-mode .stat-card {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+/* Ajuste de layout para sidebar */
+.page-wrapper {
+  transition: margin-left 0.3s ease;
+}
+
+body.sidebar-open .page-wrapper > *:not(app-sidebar) {
+  margin-left: 240px;
+  transition: margin-left 0.3s ease;
+}
+
+body.sidebar-collapsed .page-wrapper > *:not(app-sidebar) {
+  margin-left: 70px;
+  transition: margin-left 0.3s ease;
+}
+
+body:not(.sidebar-open):not(.sidebar-collapsed) .page-wrapper > *:not(app-sidebar) {
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+body.dark-mode .stat-number,
+body.dark-mode .stat-label {
+  color: #f0f6fc;
+}
+
+body.dark-mode .section {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+body.dark-mode .section-header h2 {
+  color: #f0f6fc;
+}
+
+/* Formulários */
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background: #0d1117;
+  border-color: #30363d;
+  color: #c9d1d9;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #8b949e;
+}
+
+body.dark-mode input:focus,
+body.dark-mode textarea:focus,
+body.dark-mode select:focus {
+  border-color: #58a6ff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+}
+
+/* Containers e áreas de filtro */
+body.dark-mode .filtros-container,
+body.dark-mode .filter-section,
+body.dark-mode .search-section,
+body.dark-mode .filters-wrapper {
+  background: #161b22 !important;
+  border-color: #30363d;
+}
+
+body.dark-mode .select-filtro,
+body.dark-mode select {
+  background: #0d1117 !important;
+  color: #c9d1d9 !important;
+  border-color: #30363d !important;
+}
+
+body.dark-mode .select-filtro:hover,
+body.dark-mode select:hover {
+  background: #161b22 !important;
+  border-color: #3d444d !important;
+}
+
+body.dark-mode option {
+  background: #0d1117;
+  color: #c9d1d9;
+}
+
+/* Botões em dark mode */
+body.dark-mode .btn-limpar {
+  background: #da3633;
+  border-color: #da3633;
+}
+
+body.dark-mode .btn-limpar:hover {
+  background: #b92624;
+  border-color: #b92624;
+}
+
+body.dark-mode .btn-limpar-lg {
+  background: #238636;
+  border-color: #238636;
+}
+
+body.dark-mode .btn-limpar-lg:hover {
+  background: #2ea043;
+  border-color: #2ea043;
+}
+
+body.dark-mode button:not(.btn-primary):not(.btn-danger):not(.btn-success):not(.btn-limpar):not(.btn-limpar-lg):not(.btn-alugar):not(.btn-desejo):not(.btn-devolver) {
+  background: #161b22;
+  color: #c9d1d9;
+  border-color: #30363d;
+}
+
+body.dark-mode button:not(.btn-primary):not(.btn-danger):not(.btn-success):not(.btn-limpar):not(.btn-limpar-lg):not(.btn-alugar):not(.btn-desejo):not(.btn-devolver):hover {
+  background: #1c2128;
+  border-color: #3d444d;
+}
+
+/* Áreas de conteúdo */
+body.dark-mode .content,
+body.dark-mode .main-content,
+body.dark-mode .page-content {
+  background: #0d1117;
+}
+
+body.dark-mode .header,
+body.dark-mode .page-header {
+  background: transparent;
+  border-bottom-color: #21262d;
+}
+
+/* Modais e popups */
+body.dark-mode .modal,
+body.dark-mode .popup,
+body.dark-mode .toast {
+  background: #161b22;
+  border-color: #30363d;
+  color: #c9d1d9;
+}
+
+/* Tabelas */
+body.dark-mode table {
+  background: #0d1117;
+  color: #c9d1d9;
+}
+
+body.dark-mode th,
+body.dark-mode td {
+  border-color: #30363d;
+}
+
+body.dark-mode tr:hover {
+  background: rgba(110, 118, 129, 0.1);
+}
+
+

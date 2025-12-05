@@ -1,0 +1,58 @@
+{
+  "/auth": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "pathRewrite": {
+      "^/auth": "/auth"
+    }
+  },
+  "/usuarios": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "pathRewrite": {
+      "^/usuarios": "/usuarios"
+    }
+  },
+  "/transacoes": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "pathRewrite": {
+      "^/transacoes": "/transacoes"
+    }
+  },
+  "/contas": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "pathRewrite": {
+      "^/contas": "/contas"
+    }
+  },
+  "/livros": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "pathRewrite": {
+      "^/livros": "/livros"
+    }
+  },
+  "/emprestimos": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "pathRewrite": {
+      "^/emprestimos": "/emprestimos"
+    }
+  },
+  "/desejos": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "pathRewrite": {
+      "^/desejos": "/desejos"
+    }
+  },
+  "/api": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": "/api"
+    }
+  }
+}

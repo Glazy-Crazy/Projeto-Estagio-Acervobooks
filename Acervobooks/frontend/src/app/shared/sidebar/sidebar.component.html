@@ -1,0 +1,88 @@
+<div class="sidebar" *ngIf="isLoggedIn() && isVisible()" [class.collapsed]="!isOpen()">
+  <button class="toggle-btn" (click)="toggleSidebar()" [title]="isOpen() ? 'Minimizar' : 'Expandir'">
+    <span *ngIf="isOpen()">◀</span>
+    <span *ngIf="!isOpen()">▶</span>
+  </button>
+
+  <div class="sidebar-header">
+    <div class="logo">
+      <span class="logo-icon">📚</span>
+      <span class="logo-text" *ngIf="isOpen()">Acervobooks</span>
+    </div>
+    <button class="theme-toggle" (click)="themeService.toggleTheme()" [title]="themeService.isDarkMode() ? 'Modo Claro' : 'Modo Escuro'" *ngIf="isOpen()">
+      <span *ngIf="!themeService.isDarkMode()">🌙</span>
+      <span *ngIf="themeService.isDarkMode()">☀️</span>
+    </button>
+  </div>
+
+  <nav class="sidebar-nav">
+    <!-- Navegação -->
+    <div class="nav-section">
+      <h3 class="section-title" *ngIf="isOpen()">NAVEGAÇÃO</h3>
+      <a routerLink="/inicio" routerLinkActive="active" class="nav-item" [title]="!isOpen() ? 'Início' : ''">
+        <span class="icon">🏠</span>
+        <span class="text" *ngIf="isOpen()">Início</span>
+      </a>
+    </div>
+
+    <!-- Meu Perfil -->
+    <div class="nav-section">
+      <h3 class="section-title" *ngIf="isOpen()">MEU PERFIL</h3>
+      <a routerLink="/meu-perfil" routerLinkActive="active" class="nav-item" [title]="!isOpen() ? 'Meu Perfil' : ''">
+        <span class="icon">👤</span>
+        <span class="text" *ngIf="isOpen()">Meu Perfil</span>
+      </a>
+      <a routerLink="/acervo" routerLinkActive="active" class="nav-item" [title]="!isOpen() ? 'Acervo' : ''">
+        <span class="icon">📖</span>
+        <span class="text" *ngIf="isOpen()">Acervo</span>
+      </a>
+    </div>
+
+    <!-- Biblioteca -->
+    <div class="nav-section">
+      <h3 class="section-title" *ngIf="isOpen()">BIBLIOTECA</h3>
+      <a routerLink="/meus-desejos" routerLinkActive="active" class="nav-item" [title]="!isOpen() ? 'Meus Desejos' : ''">
+        <span class="icon">❤️</span>
+        <span class="text" *ngIf="isOpen()">Meus Desejos</span>
+      </a>
+      <a routerLink="/pendencias" routerLinkActive="active" class="nav-item" [title]="!isOpen() ? 'Pendências' : ''">
+        <span class="icon">⚠️</span>
+        <span class="text" *ngIf="isOpen()">Pendências</span>
+      </a>
+      <a routerLink="/sugestao-leitura" routerLinkActive="active" class="nav-item" [title]="!isOpen() ? 'Sugestão de Leitura' : ''">
+        <span class="icon">🎨</span>
+        <span class="text" *ngIf="isOpen()">Sugestão de Leitura</span>
+      </a>
+    </div>
+
+    <!-- Menu Admin -->
+    <div class="nav-section" *ngIf="isAdmin()">
+      <h3 class="section-title" *ngIf="isOpen()">ADMINISTRAÇÃO</h3>
+      <a routerLink="/cadastrar-livro" routerLinkActive="active" class="nav-item admin-item" [title]="!isOpen() ? 'Cadastrar Livros' : ''">
+        <span class="icon">➕</span>
+        <span class="text" *ngIf="isOpen()">Cadastrar Livros</span>
+      </a>
+      <a routerLink="/editar-livro" routerLinkActive="active" class="nav-item admin-item" [title]="!isOpen() ? 'Editar Livros' : ''">
+        <span class="icon">✏️</span>
+        <span class="text" *ngIf="isOpen()">Editar Livros</span>
+      </a>
+    </div>
+
+    <!-- Logout -->
+    <div class="nav-section logout-section">
+      <button (click)="logout()" class="nav-item logout-btn" [title]="!isOpen() ? 'Logout' : ''">
+        <span class="icon">🚪</span>
+        <span class="text" *ngIf="isOpen()">Logout</span>
+      </button>
+    </div>
+  </nav>
+</div>
+
+<!-- Botão para revelar sidebar quando escondida -->
+<button 
+  class="reveal-btn" 
+  *ngIf="isLoggedIn() && !isVisible()" 
+  (click)="showSidebar()"
+  title="Mostrar sidebar">
+  <span>📚</span>
+</button>

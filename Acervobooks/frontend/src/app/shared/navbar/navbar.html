@@ -1,0 +1,20 @@
+<nav class="w-full bg-primary text-white p-4 flex items-center justify-between shadow-md sticky top-0 z-50">
+  <span class="font-bold text-lg">Acervobooks</span>
+  <div class="flex gap-2">
+    <a routerLink="/" routerLinkActive="active" (click)="goTo('/')" class="hidden md:inline-block px-3 py-2 rounded hover:bg-primary-light font-bold transition cursor-pointer">Início</a>
+    <ng-container *ngIf="!isLoggedIn()">
+      <a routerLink="/register" routerLinkActive="active" (click)="goTo('register')" class="hidden md:inline-block px-3 py-2 rounded hover:bg-primary-light font-bold transition cursor-pointer">Cadastrar-se</a>
+      <a routerLink="/login" routerLinkActive="active" (click)="goTo('login')" class="hidden md:inline-block px-3 py-2 rounded hover:bg-primary-light font-bold transition cursor-pointer">Login</a>
+    </ng-container>
+    <ng-container *ngIf="isLoggedIn()">
+  <a routerLink="/dashboard" routerLinkActive="active" (click)="goTo('dashboard')" class="hidden md:inline-block px-3 py-2 rounded hover:bg-primary-light font-bold transition cursor-pointer">Meu Perfil</a>
+  <button (click)="logout()" class="hidden md:inline-block px-3 py-2 rounded bg-danger hover:bg-danger-dark font-bold transition cursor-pointer">Logout</button>
+    </ng-container>
+    <!-- Botão de menu mobile -->
+    <button class="md:hidden p-2 rounded hover:bg-primary-light focus:outline-none" aria-label="Abrir menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+</nav>

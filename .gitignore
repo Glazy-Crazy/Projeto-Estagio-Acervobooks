@@ -1,0 +1,35 @@
+# IDEs e Editores
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Ferramentas e Cache
+.playwright-mcp/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos de Sistema
+.DS_Store
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Guias e documentação de desenvolvimento
+GUIA_COMMIT_GITHUB.md
+GUIA_CONFIGURACAO_DO_ZERO.md
+APRESENTACAO_TCC.md
+DIAGNOSTICO_ERROS.md
+INDICE_DOCUMENTACAO.md
+QUICK_START.md
+RESUMO_EXECUTIVO.md
+SISTEMA_OPERACIONAL.md
+SUMARIO.md

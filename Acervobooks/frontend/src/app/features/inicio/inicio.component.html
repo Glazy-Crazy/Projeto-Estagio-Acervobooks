@@ -1,0 +1,83 @@
+<div class="page-wrapper">
+  <app-sidebar></app-sidebar>
+
+  <div class="inicio-container">
+    <!-- Saudação -->
+    <div class="header">
+    <h1 class="greeting">Olá, {{ userName }}! 👋</h1>
+    <p class="subtitle">Bem-vindo ao Acervobooks. Explore nosso acervo e descubra sua próxima leitura!</p>
+  </div>
+
+  <!-- Cards de Estatísticas -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">📚</div>
+      <div class="stat-content">
+        <h2 class="stat-number">{{ totalLivrosAcervo }}</h2>
+        <p class="stat-label">Livros no Acervo</p>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">💻</div>
+      <div class="stat-content">
+        <h2 class="stat-number">{{ livrosAlugados }}</h2>
+        <p class="stat-label">Livros Alugados</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recém Adicionados ao Acervo -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="section-icon">🆕</span>
+        Recém Adicionados ao Acervo
+      </h2>
+      <button class="ver-todos-btn" (click)="verTodosRecentes()">Ver Todos →</button>
+    </div>
+
+    <div class="books-grid">
+      <div class="book-card" *ngFor="let livro of livrosRecentes">
+        <img 
+          [src]="livro.capaUrl || 'assets/default-book-cover.jpg'" 
+          [alt]="livro.titulo"
+          class="book-cover"
+        >
+        <div class="book-info">
+          <h3 class="book-title">{{ livro.titulo }}</h3>
+          <p class="book-author">{{ livro.autor }}</p>
+          <p class="book-genre">{{ livro.genero }}</p>
+          <span class="book-status disponivel">Disponível</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recomendações para Você -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="section-icon">⭐</span>
+        Recomendações para Você
+      </h2>
+    </div>
+
+    <div class="books-grid">
+      <div class="book-card" *ngFor="let livro of recomendacoes">
+        <img 
+          [src]="livro.capaUrl || 'assets/default-book-cover.jpg'" 
+          [alt]="livro.titulo"
+          class="book-cover"
+        >
+        <div class="book-info">
+          <h3 class="book-title">{{ livro.titulo }}</h3>
+          <p class="book-author">{{ livro.autor }}</p>
+          <p class="book-genre">{{ livro.genero }}</p>
+          <span class="book-status disponivel">Disponível</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</div>

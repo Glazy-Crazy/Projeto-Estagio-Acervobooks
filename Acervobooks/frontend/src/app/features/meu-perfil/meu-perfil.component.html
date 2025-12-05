@@ -1,0 +1,156 @@
+<app-sidebar></app-sidebar>
+<div class="page-wrapper">
+<div class="perfil-container">
+  <!-- Header com foto e informações básicas -->
+  <div class="perfil-header">
+    <div class="foto-section">
+      <div class="foto-wrapper">
+        <img 
+          [src]="usuario()?.fotoUrl || 'https://via.placeholder.com/150/667eea/ffffff?text=Usuário'" 
+          alt="Foto do perfil"
+          class="foto-perfil">
+        <button class="editar-foto-btn" (click)="toggleEditMode()" *ngIf="!editMode()">
+          <span>✏️</span>
+        </button>
+      </div>
+    </div>
+    
+    <div class="info-section">
+      <h1 class="nome">{{ usuario()?.nome || 'Carregando...' }}</h1>
+      <p class="email">{{ usuario()?.email }}</p>
+      <p class="cpf">CPF: {{ usuario()?.cpf }}</p>
+      <p class="membro-desde">Membro desde {{ formatarData(usuario()?.dataCriacao) }}</p>
+    </div>
+  </div>
+
+  <!-- Modal de Edição -->
+  <div class="modal-edit" *ngIf="editMode()">
+    <div class="modal-content">
+      <button class="btn-fechar-modal" (click)="cancelarEdicao()">✕</button>
+      <h2>Editar Perfil</h2>
+      
+      <div class="form-group">
+        <label>Nome</label>
+        <input 
+          type="text" 
+          [(ngModel)]="usuarioEdit.nome" 
+          class="input-field">
+      </div>
+      
+      <div class="form-group">
+        <label>Email</label>
+        <input 
+          type="email" 
+          [(ngModel)]="usuarioEdit.email" 
+          class="input-field">
+      </div>
+      
+      <div class="form-group">
+        <label>URL da Foto</label>
+        <input 
+          type="text" 
+          [(ngModel)]="usuarioEdit.fotoUrl" 
+          class="input-field"
+          placeholder="https://exemplo.com/foto.jpg">
+      </div>
+      
+      <div class="modal-buttons">
+        <button class="btn-salvar" (click)="salvarPerfil()">
+          Salvar
+        </button>
+        <button class="btn-cancelar" (click)="cancelarEdicao()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Últimos Livros Alugados -->
+  <div class="secao">
+    <h2 class="secao-titulo">📚 Últimos Livros Alugados</h2>
+    <div class="livros-grid" *ngIf="ultimosEmprestimos().length > 0; else semEmprestimos">
+      <div class="livro-card" *ngFor="let emprestimo of ultimosEmprestimos()">
+        <img 
+          [src]="emprestimo.livroCapaUrl || 'https://via.placeholder.com/80x120/667eea/ffffff?text=Livro'" 
+          [alt]="emprestimo.livroTitulo || 'Livro'"
+          class="livro-capa">
+        <div class="livro-info">
+          <h3>{{ emprestimo.livroTitulo }}</h3>
+          <p class="livro-autor">{{ emprestimo.livroAutor }}</p>
+          <p class="livro-status" [ngClass]="'status-' + emprestimo.status.toLowerCase()">
+            {{ traduzirStatus(emprestimo.status) }}
+          </p>
+          <p class="livro-data">Emprestado em: {{ formatarData(emprestimo.dataEmprestimo) }}</p>
+          <button 
+            class="btn-devolver" 
+            *ngIf="emprestimo.status === 'ATIVO' || emprestimo.status === 'ATRASADO'"
+            (click)="devolverLivro(emprestimo.id!)">
+            Devolver
+          </button>
+        </div>
+      </div>
+    </div>
+    <ng-template #semEmprestimos>
+      <p class="mensagem-vazia">Você ainda não alugou nenhum livro.</p>
+    </ng-template>
+  </div>
+
+  <!-- Recomendações Aleatórias -->
+  <div class="secao">
+    <h2 class="secao-titulo">⭐ Recomendações para Você</h2>
+    <div class="livros-grid" *ngIf="recomendacoes().length > 0; else semRecomendacoes">
+      <div class="livro-card" *ngFor="let livro of recomendacoes()">
+        <img 
+          [src]="livro.capaUrl" 
+          [alt]="livro.titulo"
+          class="livro-capa">
+        <div class="livro-info">
+          <h3>{{ livro.titulo }}</h3>
+          <p class="livro-autor">{{ livro.autor }}</p>
+          <p class="livro-genero">{{ livro.genero }}</p>
+          <p class="livro-disponibilidade">
+            Disponível: {{ livro.quantidadeDisponivel }}/{{ livro.quantidadeTotal }}
+          </p>
+          <button class="btn-alugar" (click)="alugarLivro(livro.id!)" [disabled]="livro.quantidadeDisponivel === 0">
+            {{ livro.quantidadeDisponivel > 0 ? 'Alugar' : 'Indisponível' }}
+          </button>
+        </div>
+      </div>
+    </div>
+    <ng-template #semRecomendacoes>
+      <p class="mensagem-vazia">Nenhuma recomendação disponível no momento.</p>
+    </ng-template>
+  </div>
+
+  <!-- Acervo Disponível -->
+  <div class="secao">
+    <h2 class="secao-titulo">📖 Acervo Disponível</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-numero">{{ totalLivros() }}</div>
+        <div class="stat-label">Livros no Acervo</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-numero">{{ livrosDisponiveis() }}</div>
+        <div class="stat-label">Livros Disponíveis</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-numero">{{ livrosAlugados() }}</div>
+        <div class="stat-label">Livros Alugados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-numero">{{ generosDisponiveis() }}</div>
+        <div class="stat-label">Gêneros Diferentes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast/Popup -->
+  <div class="toast" *ngIf="showToast()" [ngClass]="'toast-' + toastType()">
+    <div class="toast-content">
+      <span class="toast-icon">{{ toastType() === 'sucesso' ? '✓' : '⚠' }}</span>
+      <span class="toast-message">{{ toastMessage() }}</span>
+    </div>
+  </div>
+</div>
+</div>

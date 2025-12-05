@@ -1,0 +1,242 @@
+<app-sidebar></app-sidebar>
+<div class="page-wrapper">
+<div class="editar-container">
+  <div class="header">
+    <h1>✏️ Editar Livros</h1>
+    <p class="subtitle">Gerencie os livros do acervo</p>
+  </div>
+
+  @if (mensagem()) {
+    <div class="alert alert-success">
+      ✓ {{ mensagem() }}
+    </div>
+  }
+
+  @if (erro()) {
+    <div class="alert alert-error">
+      ✗ {{ erro() }}
+    </div>
+  }
+
+  <div class="editar-layout">
+    <!-- Lista de Livros -->
+    <div class="livros-list-panel">
+      <div class="panel-card">
+        <h2 class="panel-title">Livros Cadastrados</h2>
+        
+        <!-- Busca -->
+        <input 
+          type="text"
+          [(ngModel)]="termoBusca"
+          placeholder="Buscar por título ou autor..."
+          class="form-input">
+
+        @if (loadingLivros()) {
+          <p class="text-center py-8">Carregando...</p>
+        } @else if (livrosFiltrados.length === 0) {
+          <p class="text-center py-8 opacity-75">Nenhum livro encontrado</p>
+        } @else {
+          <div class="livros-scroll">
+            @for (livro of livrosFiltrados; track livro.id) {
+              <div 
+                (click)="selecionarLivro(livro)"
+                [class.selected]="livroSelecionado()?.id === livro.id"
+                class="livro-item">
+                <p class="livro-titulo">{{ livro.titulo }}</p>
+                <p class="livro-autor">{{ livro.autor }}</p>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Formulário de Edição -->
+    <div class="form-panel">
+      @if (livroSelecionado()) {
+        <div class="panel-card">
+          <div class="form-header">
+            <h2 class="panel-title">Editar: {{ livroSelecionado()!.titulo }}</h2>
+            @if (livroSelecionado()?.id) {
+              <button 
+                (click)="excluirLivro(livroSelecionado()!.id!)"
+                class="btn-delete">
+                🗑️ Excluir
+              </button>
+            }
+          </div>
+
+          <form (ngSubmit)="salvarAlteracoes()">
+            <div class="form-grid">
+              <!-- Título -->
+              <div class="form-group full-width">
+                <label>Título *</label>
+                <input 
+                  type="text" 
+                  [(ngModel)]="livroSelecionado()!.titulo" 
+                  name="titulo"
+                  required
+                  class="form-input">
+              </div>
+
+              <!-- Autor -->
+              <div class="form-group">
+                <label>Autor *</label>
+                <input 
+                  type="text" 
+                  [(ngModel)]="livroSelecionado()!.autor" 
+                  name="autor"
+                  required
+                  class="form-input">
+              </div>
+
+              <!-- Editora -->
+              <div class="form-group">
+                <label>Editora</label>
+                <input 
+                  type="text" 
+                  [(ngModel)]="livroSelecionado()!.editora" 
+                  name="editora"
+                  class="form-input">
+              </div>
+
+              <!-- ISBN -->
+              <div class="form-group">
+                <label>ISBN</label>
+                <input 
+                  type="text" 
+                  [(ngModel)]="livroSelecionado()!.isbn" 
+                  name="isbn"
+                  class="form-input">
+              </div>
+
+              <!-- Ano de Publicação -->
+              <div class="form-group">
+                <label>Ano de Publicação</label>
+                <input 
+                  type="number" 
+                  [(ngModel)]="livroSelecionado()!.anoPublicacao" 
+                  name="anoPublicacao"
+                  class="form-input">
+              </div>
+
+              <!-- Gênero -->
+              <div class="form-group">
+                <label>Gênero</label>
+                <input 
+                  type="text" 
+                  [(ngModel)]="livroSelecionado()!.genero" 
+                  name="genero"
+                  class="form-input">
+              </div>
+
+              <!-- Idioma -->
+              <div class="form-group">
+                <label>Idioma</label>
+                <input 
+                  type="text" 
+                  [(ngModel)]="livroSelecionado()!.idioma" 
+                  name="idioma"
+                  class="form-input">
+              </div>
+
+              <!-- Número de Páginas -->
+              <div class="form-group">
+                <label>Número de Páginas</label>
+                <input 
+                  type="number" 
+                  [(ngModel)]="livroSelecionado()!.numeroPaginas" 
+                  name="numeroPaginas"
+                  class="form-input">
+              </div>
+
+              <!-- Quantidade Total -->
+              <div class="form-group">
+                <label>Quantidade Total *</label>
+                <input 
+                  type="number" 
+                  [(ngModel)]="livroSelecionado()!.quantidadeTotal" 
+                  name="quantidadeTotal"
+                  (ngModelChange)="updateQuantidadeDisponivel()"
+                  required
+                  min="1"
+                  class="form-input">
+              </div>
+
+              <!-- Quantidade Disponível -->
+              <div class="form-group">
+                <label>Quantidade Disponível</label>
+                <input 
+                  type="number" 
+                  [(ngModel)]="livroSelecionado()!.quantidadeDisponivel" 
+                  name="quantidadeDisponivel"
+                  [max]="livroSelecionado()!.quantidadeTotal"
+                  min="0"
+                  class="form-input">
+              </div>
+
+              <!-- URL da Capa -->
+              <div class="form-group full-width">
+                <label>URL da Capa</label>
+                <div class="capa-container">
+                  <input 
+                    type="url" 
+                    [(ngModel)]="livroSelecionado()!.capaUrl" 
+                    name="capaUrl"
+                    class="form-input">
+                  @if (livroSelecionado()!.capaUrl && livroSelecionado()!.capaUrl?.trim() !== '') {
+                    <div class="capa-preview">
+                      <img 
+                        [src]="livroSelecionado()!.capaUrl" 
+                        alt="Preview da capa"
+                        (error)="$any($event.target).src='https://via.placeholder.com/100x150/8B4513/ffffff?text=Sem+Imagem'">
+                    </div>
+                  } @else {
+                    <div></div>
+                  }
+                </div>
+              </div>
+
+              <!-- Sinopse -->
+              <div class="form-group full-width">
+                <label>Sinopse</label>
+                <textarea 
+                  [(ngModel)]="livroSelecionado()!.sinopse" 
+                  name="sinopse"
+                  rows="4"
+                  class="form-input"></textarea>
+              </div>
+            </div>
+
+            <!-- Botões -->
+            <div class="form-actions">
+              <button 
+                type="submit"
+                [disabled]="loading()"
+                class="btn btn-primary">
+                @if (loading()) {
+                  Salvando...
+                } @else {
+                  Salvar Alterações
+                }
+              </button>
+              <button 
+                type="button"
+                (click)="cancelarEdicao()"
+                class="btn btn-secondary">
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+      } @else {
+        <div class="panel-card empty-state">
+          <p>
+            ← Selecione um livro da lista para editar
+          </p>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+</div>

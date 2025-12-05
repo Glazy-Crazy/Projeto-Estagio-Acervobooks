@@ -1,0 +1,30 @@
+<div class="min-h-screen flex flex-col items-center justify-center bg-neutral-dark p-4">
+  <!-- Imagem do Livro -->
+  <div class="mb-8 animate-bounce">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-primary" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M4 6h16v2H4zm0 5h16v9H4zm1-1h2v7H5zm3 0h2v7H8zm3 0h2v7h-2zm3 0h2v7h-2zm3 0h2v7h-2z"/>
+    </svg>
+  </div>
+
+  <!-- Título Principal -->
+  <h1 class="text-6xl md:text-7xl font-bold text-primary mb-6 text-center">Acervobooks</h1>
+
+  <!-- Subtítulo -->
+  <p class="text-lg md:text-xl text-neutral-light text-center max-w-2xl mb-12">
+    Sua Biblioteca Digital Acervobooks. Gerencie sua coleção de livros, controle empréstimos e descubra novas leituras. Organize seus conhecimentos de forma simples e intuitiva!
+  </p>
+
+  <!-- Botões de Ação -->
+  <div class="flex flex-col md:flex-row gap-6 w-full max-w-lg">
+    <button 
+      (click)="goTo('/login')"
+      class="flex-1 bg-primary hover:bg-primary-dark text-neutral-dark font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
+      Acesse agora
+    </button>
+    <button 
+      (click)="goTo('/sobre')"
+      class="flex-1 bg-info hover:bg-info-dark text-neutral-light font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
+      Saiba Mais
+    </button>
+  </div>
+</div>

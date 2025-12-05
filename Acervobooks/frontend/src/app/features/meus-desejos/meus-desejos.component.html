@@ -1,0 +1,40 @@
+<app-sidebar></app-sidebar>
+<div class="page-wrapper">
+<div class="container">
+  <div class="header">
+    <h1>💝 Meus Desejos</h1>
+    <p class="subtitle">Livros que você deseja ler</p>
+  </div>
+
+  <div *ngIf="loading()" class="loading">Carregando...</div>
+
+  <div *ngIf="!loading() && livros().length === 0" class="empty">
+    <p>Sua lista de desejos está vazia</p>
+    <p class="empty-subtitle">Adicione livros aos seus desejos clicando no ❤️ no Acervo</p>
+  </div>
+
+  <div *ngIf="!loading() && livros().length > 0" class="livros-grid">
+    <div *ngFor="let livro of livros()" class="livro-card">
+      <button 
+        class="btn-remover" 
+        (click)="removerDesejo(livro.id!)"
+        title="Remover dos desejos">
+        ❌
+      </button>
+      
+      <div class="capa">
+        <img [src]="livro.capaUrl || 'assets/book-placeholder.png'" [alt]="livro.titulo" />
+        <div class="disponibilidade" [class.indisponivel]="livro.quantidadeDisponivel === 0">
+          {{ livro.quantidadeDisponivel > 0 ? livro.quantidadeDisponivel + ' disponível' : 'Indisponível' }}
+        </div>
+      </div>
+      <div class="info">
+        <h3>{{ livro.titulo }}</h3>
+        <p class="autor">{{ livro.autor }}</p>
+        <p class="genero">{{ livro.genero }}</p>
+        <p class="editora">{{ livro.editora }} - {{ livro.anoPublicacao }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

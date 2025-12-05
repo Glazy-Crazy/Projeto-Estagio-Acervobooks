@@ -1,0 +1,173 @@
+<app-sidebar></app-sidebar>
+<div class="page-wrapper">
+<div class="cadastrar-container">
+  <div class="header">
+    <h1>📚 Cadastrar Novo Livro</h1>
+    <p class="subtitle">Adicione um novo livro ao acervo</p>
+  </div>
+
+  @if (mensagem()) {
+    <div class="alert alert-success">
+      ✓ {{ mensagem() }}
+    </div>
+  }
+
+  @if (erro()) {
+    <div class="alert alert-error">
+      ✗ {{ erro() }}
+    </div>
+  }
+
+  <form (ngSubmit)="onSubmit()" class="form-card">
+    <div class="form-grid">
+      <!-- Título -->
+      <div class="form-group full-width">
+        <label>Título *</label>
+        <input 
+          type="text" 
+          [(ngModel)]="livro.titulo" 
+          name="titulo"
+          required
+          class="form-input">
+      </div>
+
+      <!-- Autor -->
+      <div class="form-group">
+        <label>Autor *</label>
+        <input 
+          type="text" 
+          [(ngModel)]="livro.autor" 
+          name="autor"
+          required
+          class="form-input">
+      </div>
+
+      <!-- Editora -->
+      <div class="form-group">
+        <label>Editora</label>
+        <input 
+          type="text" 
+          [(ngModel)]="livro.editora" 
+          name="editora"
+          class="form-input">
+      </div>
+
+      <!-- ISBN -->
+      <div class="form-group">
+        <label>ISBN</label>
+        <input 
+          type="text" 
+          [(ngModel)]="livro.isbn" 
+          name="isbn"
+          class="form-input">
+      </div>
+
+      <!-- Ano de Publicação -->
+      <div class="form-group">
+        <label>Ano de Publicação</label>
+        <input 
+          type="number" 
+          [(ngModel)]="livro.anoPublicacao" 
+          name="anoPublicacao"
+          class="form-input">
+      </div>
+
+      <!-- Gênero -->
+      <div class="form-group">
+        <label>Gênero</label>
+        <input 
+          type="text" 
+          [(ngModel)]="livro.genero" 
+          name="genero"
+          class="form-input">
+      </div>
+
+      <!-- Idioma -->
+      <div class="form-group">
+        <label>Idioma</label>
+        <input 
+          type="text" 
+          [(ngModel)]="livro.idioma" 
+          name="idioma"
+          class="form-input">
+      </div>
+
+      <!-- Número de Páginas -->
+      <div class="form-group">
+        <label>Número de Páginas</label>
+        <input 
+          type="number" 
+          [(ngModel)]="livro.numeroPaginas" 
+          name="numeroPaginas"
+          class="form-input">
+      </div>
+
+      <!-- Quantidade Total -->
+      <div class="form-group">
+        <label>Quantidade Total *</label>
+        <input 
+          type="number" 
+          [(ngModel)]="livro.quantidadeTotal" 
+          name="quantidadeTotal"
+          (ngModelChange)="updateQuantidadeDisponivel()"
+          required
+          min="1"
+          class="form-input">
+      </div>
+
+      <!-- URL da Capa -->
+      <div class="form-group full-width">
+        <label>URL da Capa</label>
+        <div class="capa-container">
+          <input 
+            type="url" 
+            [(ngModel)]="livro.capaUrl" 
+            name="capaUrl"
+            placeholder="https://exemplo.com/capa.jpg"
+            class="form-input">
+          @if (livro.capaUrl && livro.capaUrl.trim() !== '') {
+            <div class="capa-preview">
+              <img 
+                [src]="livro.capaUrl" 
+                alt="Preview da capa"
+                (error)="$any($event.target).src='https://via.placeholder.com/100x150/8B4513/ffffff?text=Sem+Imagem'">
+            </div>
+          } @else {
+            <div></div>
+          }
+        </div>
+      </div>
+
+      <!-- Sinopse -->
+      <div class="form-group full-width">
+        <label>Sinopse</label>
+        <textarea 
+          [(ngModel)]="livro.sinopse" 
+          name="sinopse"
+          rows="4"
+          class="form-input"></textarea>
+      </div>
+    </div>
+
+    <!-- Botões -->
+    <div class="form-actions">
+      <button 
+        type="submit"
+        [disabled]="loading()"
+        class="btn btn-primary">
+        @if (loading()) {
+          Cadastrando...
+        } @else {
+          Cadastrar Livro
+        }
+      </button>
+      <button 
+        type="button"
+        (click)="router.navigate(['/acervo'])"
+        class="btn btn-secondary">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>
+</div>

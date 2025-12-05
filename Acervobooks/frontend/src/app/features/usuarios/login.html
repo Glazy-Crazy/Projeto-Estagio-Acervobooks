@@ -1,0 +1,11 @@
+<div class="min-h-screen flex flex-col items-center justify-center bg-neutral-dark p-4">
+  <form class="w-full max-w-md bg-neutral rounded-lg shadow-lg p-6 flex flex-col gap-4 border-t-4 border-primary" (ngSubmit)="onSubmit()" autocomplete="off">
+    <h1 class="text-3xl font-bold text-primary-light mb-2 text-center">Entrar</h1>
+    <p class="text-neutral-light text-center text-sm mb-4">Bem-vindo ao Acervobooks</p>
+    <input class="border border-primary rounded p-3 bg-neutral-light text-neutral-dark placeholder-neutral placeholder-opacity-100 focus:outline-none focus:border-primary-light focus:ring-2 focus:ring-primary focus:ring-opacity-50" type="text" placeholder="E-mail" [(ngModel)]="login" name="login" required>
+    <input class="border border-primary rounded p-3 bg-neutral-light text-neutral-dark placeholder-neutral placeholder-opacity-100 focus:outline-none focus:border-primary-light focus:ring-2 focus:ring-primary focus:ring-opacity-50" type="password" placeholder="Senha" [(ngModel)]="password" name="password" required>
+    <button class="w-full bg-primary text-neutral-dark py-3 rounded-lg font-bold text-lg shadow-lg hover:bg-primary-light transition" type="submit" [disabled]="loading">{{ loading ? 'Entrando...' : 'Entrar' }}</button>
+    <button class="w-full bg-neutral-dark text-primary border-2 border-primary py-3 rounded-lg font-bold text-lg shadow-lg hover:bg-primary hover:text-neutral-dark transition" type="button" (click)="router.navigate(['/register'])">Criar conta</button>
+  <div *ngIf="error" class="text-danger text-center font-semibold">{{ error }}</div>
+  </form>
+</div>

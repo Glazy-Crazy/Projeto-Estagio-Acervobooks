@@ -1,0 +1,415 @@
+.page-wrapper {
+  display: flex;
+}
+
+.editar-container {
+  padding: 30px;
+  flex: 1;
+  width: 100%;
+  min-height: 100vh;
+  background: #f5f5f0;
+}
+
+:host-context(body.dark-mode) .editar-container {
+  background: #0d1117 !important;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 8px 0;
+}
+
+:host-context(body.dark-mode) .header h1 {
+  color: #e6edf3 !important;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #718096;
+  margin: 0;
+}
+
+:host-context(body.dark-mode) .subtitle {
+  color: #8b949e !important;
+}
+
+/* Alertas */
+.alert {
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.alert-success {
+  background: #48bb78;
+  color: white;
+}
+
+:host-context(body.dark-mode) .alert-success {
+  background: #238636 !important;
+  border: 1px solid #2ea043 !important;
+}
+
+.alert-error {
+  background: #f56565;
+  color: white;
+}
+
+:host-context(body.dark-mode) .alert-error {
+  background: #da3633 !important;
+  border: 1px solid #f85149 !important;
+}
+
+/* Layout */
+.editar-layout {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 20px;
+}
+
+/* Painel de Livros */
+.livros-list-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+:host-context(body.dark-mode) .panel-card {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.panel-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 20px 0;
+}
+
+:host-context(body.dark-mode) .panel-title {
+  color: #e6edf3 !important;
+}
+
+.livros-scroll {
+  max-height: 600px;
+  overflow-y: auto;
+  margin-top: 15px;
+}
+
+.livro-item {
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #f7fafc;
+}
+
+:host-context(body.dark-mode) .livro-item {
+  background: #0d1117 !important;
+  color: #c9d1d9 !important;
+  border: 1px solid #30363d !important;
+}
+
+.livro-item:hover {
+  background: #8B4513;
+  color: white;
+  transform: translateX(4px);
+}
+
+:host-context(body.dark-mode) .livro-item:hover {
+  background: #238636 !important;
+  border-color: #2ea043 !important;
+}
+
+.livro-item.selected {
+  background: #8B4513;
+  color: white;
+}
+
+:host-context(body.dark-mode) .livro-item.selected {
+  background: #238636 !important;
+  border-color: #2ea043 !important;
+}
+
+.livro-titulo {
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0 0 4px 0;
+}
+
+.livro-autor {
+  font-size: 13px;
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* Painel do Formulário */
+.form-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.btn-delete {
+  background: #f56565;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+:host-context(body.dark-mode) .btn-delete {
+  background: #da3633 !important;
+}
+
+.btn-delete:hover {
+  background: #e53e3e;
+}
+
+:host-context(body.dark-mode) .btn-delete:hover {
+  background: #f85149 !important;
+}
+
+/* Formulário */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+:host-context(body.dark-mode) .form-group label {
+  color: #c9d1d9 !important;
+}
+
+.form-input {
+  padding: 12px 16px;
+  font-size: 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+  background: white;
+  color: #2d3748;
+}
+
+:host-context(body.dark-mode) .form-input {
+  background: #0d1117 !important;
+  border-color: #30363d !important;
+  color: #c9d1d9 !important;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #8B4513;
+}
+
+:host-context(body.dark-mode) .form-input:focus {
+  border-color: #58a6ff !important;
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1) !important;
+}
+
+.form-input:disabled {
+  background: #f7fafc;
+  cursor: not-allowed;
+}
+
+:host-context(body.dark-mode) .form-input:disabled {
+  background: #161b22 !important;
+  color: #6e7681 !important;
+}
+
+textarea.form-input {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+/* Preview da Capa */
+.capa-container {
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  gap: 15px;
+  align-items: center;
+}
+
+.capa-container .form-input {
+  width: 100%;
+}
+
+.capa-preview {
+  width: 100px;
+  height: 150px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border: 3px solid #8B4513;
+  justify-self: center;
+}
+
+:host-context(body.dark-mode) .capa-preview {
+  border-color: #58a6ff !important;
+  box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3) !important;
+}
+
+.capa-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Botões */
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.btn {
+  flex: 1;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: #8B4513;
+  color: white;
+}
+
+:host-context(body.dark-mode) .btn-primary {
+  background: #238636 !important;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #6d3410;
+  transform: translateY(-1px);
+}
+
+:host-context(body.dark-mode) .btn-primary:hover:not(:disabled) {
+  background: #2ea043 !important;
+}
+
+.btn-primary:disabled {
+  background: #cbd5e0;
+  cursor: not-allowed;
+  transform: none;
+}
+
+:host-context(body.dark-mode) .btn-primary:disabled {
+  background: #21262d !important;
+  color: #6e7681 !important;
+}
+
+.btn-secondary {
+  background: #e2e8f0;
+  color: #2d3748;
+}
+
+:host-context(body.dark-mode) .btn-secondary {
+  background: #21262d !important;
+  color: #c9d1d9 !important;
+  border: 1px solid #30363d !important;
+}
+
+.btn-secondary:hover {
+  background: #cbd5e0;
+  transform: translateY(-1px);
+}
+
+:host-context(body.dark-mode) .btn-secondary:hover {
+  background: #30363d !important;
+}
+
+/* Estado Vazio */
+.empty-state {
+  text-align: center;
+  padding: 60px 30px;
+}
+
+.empty-state p {
+  font-size: 18px;
+  color: #718096;
+  margin: 0;
+}
+
+:host-context(body.dark-mode) .empty-state p {
+  color: #8b949e !important;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .editar-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .livros-scroll {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group.full-width {
+    grid-column: 1;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .btn-delete {
+    width: 100%;
+  }
+}

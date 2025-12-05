@@ -1,0 +1,37 @@
+<app-sidebar></app-sidebar>
+<div class="page-wrapper">
+<div class="container">
+  <div class="header">
+    <h1>⚠️ Pendências</h1>
+    <p class="subtitle">Livros com devolução atrasada</p>
+  </div>
+
+  <div *ngIf="loading" class="loading">Carregando...</div>
+
+  <div *ngIf="!loading && pendencias.length === 0" class="empty success">
+    <h2>✅ Nenhuma pendência!</h2>
+    <p>Parabéns! Você está em dia com suas devoluções</p>
+  </div>
+
+  <div *ngIf="!loading && pendencias.length > 0" class="pendencias-list">
+    <div *ngFor="let pend of pendencias" class="pendencia-card atrasada">
+      <div class="capa">
+        <img [src]="pend.livroCapaUrl || 'assets/book-placeholder.png'" [alt]="pend.livroTitulo" />
+      </div>
+      <div class="info">
+        <h3>{{ pend.livroTitulo }}</h3>
+        <p class="autor">{{ pend.livroAutor }}</p>
+        <p class="data-emprestimo">📅 Emprestado em: {{ pend.dataEmprestimo }}</p>
+        <p class="data-prevista">📆 Devolução prevista: {{ pend.dataPrevistaDevolucao }}</p>
+        <div class="alerta-container">
+          <span class="alerta-badge">❌ Data Expirada</span>
+          <span class="dias-atraso">Atraso detectado</span>
+        </div>
+        <button class="btn-devolver" (click)="devolverLivro(pend.id!)">
+          🔄 Devolver Agora
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

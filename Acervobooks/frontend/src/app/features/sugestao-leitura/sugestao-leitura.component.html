@@ -1,0 +1,82 @@
+<div class="page-wrapper">
+  <app-sidebar></app-sidebar>
+
+  <div class="container">
+    <div class="header">
+      <h1 class="title">🎨 Sugestão de Leitura</h1>
+      <p class="subtitle">Descubra seu próximo livro favorito</p>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Carregando sugestão...</p>
+    </div>
+
+    <div *ngIf="!loading && !livroSugerido" class="empty">
+      <p>📚 Nenhum livro disponível no momento</p>
+    </div>
+
+    <div *ngIf="!loading && livroSugerido" class="sugestao-container">
+      <div class="livro-card">
+        <div class="capa-container">
+          <img [src]="livroSugerido.capaUrl || 'assets/book-placeholder.png'" 
+               [alt]="livroSugerido.titulo" 
+               class="capa-livro" />
+        </div>
+
+        <div class="livro-info">
+          <span class="badge-sugestao">SUGESTÃO DO DIA</span>
+          
+          <h2 class="livro-titulo">{{ livroSugerido.titulo }}</h2>
+          
+          <p class="livro-autor">por {{ livroSugerido.autor }}</p>
+
+          <div class="info-detalhes">
+            <div class="info-row" *ngIf="livroSugerido.genero">
+              <span class="info-label">GÊNERO:</span>
+              <span class="info-value">{{ livroSugerido.genero }}</span>
+            </div>
+            
+            <div class="info-row" *ngIf="livroSugerido.editora">
+              <span class="info-label">EDITORA:</span>
+              <span class="info-value">{{ livroSugerido.editora }}</span>
+            </div>
+
+            <div class="info-row" *ngIf="livroSugerido.anoPublicacao">
+              <span class="info-label">ANO:</span>
+              <span class="info-value">{{ livroSugerido.anoPublicacao }}</span>
+            </div>
+
+            <div class="info-row">
+              <span class="info-label">DISPONÍVEIS:</span>
+              <span class="info-value">{{ livroSugerido.quantidadeDisponivel }}/{{ livroSugerido.quantidadeTotal }}</span>
+            </div>
+          </div>
+
+          <p class="livro-sinopse" *ngIf="livroSugerido.sinopse">
+            {{ livroSugerido.sinopse }}
+          </p>
+
+          <div class="acoes-buttons">
+            <button class="btn-alugar" 
+                    (click)="alugarLivro()" 
+                    [disabled]="!livroSugerido || livroSugerido.quantidadeDisponivel === 0">
+              Alugar Livro
+            </button>
+            <button class="btn-nova-sugestao" (click)="novaSugestao()">
+              🔄 Nova Sugestão
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast de Feedback -->
+    <div *ngIf="showToast()" 
+         class="toast" 
+         [ngClass]="toastType() === 'sucesso' ? 'toast-success' : 'toast-error'">
+      <span class="toast-icon">{{ toastType() === 'sucesso' ? '✓' : '⚠' }}</span>
+      <span class="toast-message">{{ toastMessage() }}</span>
+    </div>
+  </div>
+</div>

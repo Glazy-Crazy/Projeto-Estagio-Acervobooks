@@ -1,0 +1,101 @@
+<app-sidebar></app-sidebar>
+<div class="page-wrapper">
+<div class="acervo-container">
+  <div class="header">
+    <h1>📚 Acervo de Livros</h1>
+    <p class="subtitle">Explore nossa coleção completa</p>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filtros-container">
+    <div class="filtro-busca">
+      <input 
+        type="text" 
+        placeholder="🔍 Buscar por título, autor, gênero ou editora..."
+        [(ngModel)]="searchTerm"
+        (input)="aplicarFiltros()"
+        class="input-busca">
+    </div>
+
+    <div class="filtros-opcoes">
+      <select [(ngModel)]="selectedGenero" (change)="aplicarFiltros()" class="select-filtro">
+        <option value="">Todos os Gêneros</option>
+        <option *ngFor="let genero of generos()" [value]="genero">{{ genero }}</option>
+      </select>
+
+      <select [(ngModel)]="selectedDisponibilidade" (change)="aplicarFiltros()" class="select-filtro">
+        <option value="">Todas Disponibilidades</option>
+        <option value="disponivel">Disponíveis</option>
+        <option value="indisponivel">Indisponíveis</option>
+      </select>
+
+      <button (click)="limparFiltros()" class="btn-limpar">Limpar Filtros</button>
+    </div>
+  </div>
+
+  <!-- Resultados -->
+  <div class="resultados-info">
+    <p>{{ livrosFiltrados().length }} livro(s) encontrado(s)</p>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading()" class="loading">
+    <div class="spinner"></div>
+    <p>Carregando acervo...</p>
+  </div>
+
+  <!-- Grid de Livros -->
+  <div *ngIf="!loading() && livrosFiltrados().length > 0" class="livros-grid">
+    <div *ngFor="let livro of livrosFiltrados()" class="livro-card">
+      <div class="capa-container">
+        <img [src]="livro.capaUrl || 'assets/book-placeholder.png'" [alt]="livro.titulo" class="capa">
+        <div class="badge-disponibilidade" [class.indisponivel]="(livro.quantidadeDisponivel || 0) === 0">
+          {{ (livro.quantidadeDisponivel || 0) > 0 ? livro.quantidadeDisponivel + ' disponível' : 'Indisponível' }}
+        </div>
+      </div>
+
+      <div class="livro-info">
+        <h3 class="titulo">{{ livro.titulo }}</h3>
+        <p class="autor">{{ livro.autor }}</p>
+        <p class="genero" *ngIf="livro.genero">📖 {{ livro.genero }}</p>
+        <p class="editora" *ngIf="livro.editora">🏢 {{ livro.editora }}</p>
+        <p class="ano" *ngIf="livro.anoPublicacao">📅 {{ livro.anoPublicacao }}</p>
+        
+        <div class="descricao" *ngIf="livro.descricao">
+          <p>{{ livro.descricao }}</p>
+        </div>
+
+        <div class="acoes">
+          <button 
+            (click)="adicionarDesejo(livro.id!)" 
+            class="btn-desejo"
+            title="Adicionar aos desejos">
+            ❤️ Desejo
+          </button>
+          <button 
+            (click)="alugarLivro(livro.id!)" 
+            class="btn-alugar"
+            [disabled]="(livro.quantidadeDisponivel || 0) === 0"
+            title="Alugar livro">
+            📖 Alugar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensagem vazia -->
+  <div *ngIf="!loading() && livrosFiltrados().length === 0" class="empty">
+    <div class="empty-icon">📚</div>
+    <h2>Nenhum livro encontrado</h2>
+    <p>Tente ajustar os filtros ou limpar a busca</p>
+    <button (click)="limparFiltros()" class="btn-limpar-lg">Limpar Filtros</button>
+  </div>
+
+  <!-- Toast -->
+  <div *ngIf="showToast()" class="toast" [class.success]="toastType() === 'sucesso'" [class.error]="toastType() === 'erro'">
+    <span class="icon">{{ toastType() === 'sucesso' ? '✓' : '⚠' }}</span>
+    <span>{{ toastMessage() }}</span>
+  </div>
+</div>
+</div>

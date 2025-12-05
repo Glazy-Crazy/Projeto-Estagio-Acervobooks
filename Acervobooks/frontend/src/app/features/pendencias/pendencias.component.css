@@ -1,0 +1,174 @@
+.page-wrapper {
+  display: flex;
+}
+
+.container {
+  padding: 30px;
+  flex: 1;
+  width: 100%;
+}
+
+.header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 8px 0;
+}
+
+body.dark-mode .header h1 {
+  color: #e2e8f0;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #718096;
+  margin: 0 0 30px 0;
+}
+
+body.dark-mode .subtitle {
+  color: #a0aec0;
+}
+
+.loading, .empty {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty.success {
+  color: #22543d;
+}
+
+.empty.success h2 {
+  font-size: 28px;
+  margin: 0 0 12px 0;
+}
+
+.pendencias-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.pendencia-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(229, 62, 62, 0.2);
+  border: 2px solid #fed7d7;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+body.dark-mode .pendencia-card {
+  background: #2a2a2a;
+  border-color: #c53030;
+}
+
+.pendencia-card.atrasada {
+  border-color: #e53e3e;
+  background: #fff5f5;
+}
+
+body.dark-mode .pendencia-card.atrasada {
+  background: #2a1a1a;
+  border-color: #e53e3e;
+}
+
+.capa {
+  width: 100%;
+  height: 250px;
+  background: #f7fafc;
+}
+
+.capa img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  padding: 20px;
+}
+
+.info h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 8px 0;
+}
+
+body.dark-mode .info h3 {
+  color: #e2e8f0;
+}
+
+.autor {
+  font-size: 14px;
+  color: #718096;
+  margin: 0 0 12px 0;
+}
+
+body.dark-mode .autor {
+  color: #a0aec0;
+}
+
+.data-emprestimo,
+.data-prevista {
+  font-size: 13px;
+  color: #4a5568;
+  margin: 6px 0;
+}
+
+body.dark-mode .data-emprestimo,
+body.dark-mode .data-prevista {
+  color: #a0aec0;
+}
+
+.alerta-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.alerta-badge {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #e53e3e;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.dias-atraso {
+  font-size: 14px;
+  font-weight: 600;
+  color: #c53030;
+  background: #fed7d7;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+body.dark-mode .dias-atraso {
+  background: #4a1a1a;
+  color: #fc8181;
+}
+
+.btn-devolver {
+  width: 100%;
+  padding: 12px;
+  background: #e53e3e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-devolver:hover {
+  background: #c53030;
+  transform: translateY(-2px);
+}

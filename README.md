@@ -464,9 +464,9 @@ Este projeto foi desenvolvido como Trabalho de Conclusão de Curso (TCC) e está
 
 ---
 
-## 👨‍💻 Autor
+## 👨‍💻 Autores
 
-**Diego**
+**Diego, Fred, Ronan e Ana**
 
 - GitHub: [@Glazy-Crazy](https://github.com/Glazy-Crazy)
 - Projeto: [Acervobooks](https://github.com/Glazy-Crazy/Projeto-Estagio-Acervobooks)
@@ -494,7 +494,7 @@ Encontrou um bug ou tem alguma sugestão?
 
 <div align="center">
 
-**Desenvolvido com ❤️ por Diego**
+**Desenvolvido com ❤️ por Diego, Fred, Ronan e Ana**
 
 ⭐ Se este projeto te ajudou, considere dar uma estrela!
 

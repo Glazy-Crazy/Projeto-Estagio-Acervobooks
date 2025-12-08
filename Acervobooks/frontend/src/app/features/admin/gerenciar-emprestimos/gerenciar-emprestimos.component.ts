@@ -77,10 +77,31 @@ export class GerenciarEmprestimosComponent implements OnInit {
   }
 
   calcularDiasRestantes(dataPrevistaDevolucao: string): number {
-    const dataPrevist = new Date(dataPrevistaDevolucao);
+    if (!dataPrevistaDevolucao) return 0;
+    
+    // Converter data do formato dd/MM/yyyy para Date
+    const dataPrevist = this.parseDataBrasileira(dataPrevistaDevolucao);
+    if (!dataPrevist) return 0;
+    
     const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+    dataPrevist.setHours(0, 0, 0, 0);
+    
     const diffTime = dataPrevist.getTime() - hoje.getTime();
     return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  }
+
+  parseDataBrasileira(data: string): Date | null {
+    if (!data) return null;
+    const partes = data.split('/');
+    if (partes.length !== 3) return null;
+    
+    const dia = parseInt(partes[0], 10);
+    const mes = parseInt(partes[1], 10) - 1; // Mês em JS é 0-indexed
+    const ano = parseInt(partes[2], 10);
+    
+    const dateObj = new Date(ano, mes, dia);
+    return isNaN(dateObj.getTime()) ? null : dateObj;
   }
 
   getStatusClass(status: string): string {
@@ -111,8 +132,15 @@ export class GerenciarEmprestimosComponent implements OnInit {
 
   formatarData(data: string): string {
     if (!data) return '-';
+    
+    // Se já está no formato dd/MM/yyyy, retornar direto
+    if (data.includes('/')) {
+      return data;
+    }
+    
+    // Caso contrário, parsear e formatar
     const date = new Date(data);
-    return date.toLocaleDateString('pt-BR');
+    return isNaN(date.getTime()) ? '-' : date.toLocaleDateString('pt-BR');
   }
 
   getTotalEmprestimos(): number {
@@ -129,5 +157,50 @@ export class GerenciarEmprestimosComponent implements OnInit {
 
   getEmprestimosDevolvidos(): number {
     return this.emprestimos.filter(e => e.status === StatusEmprestimo.DEVOLVIDO).length;
+  }
+
+  podeRenovar(emprestimo: Emprestimo): boolean {
+    if (emprestimo.status !== StatusEmprestimo.ATIVO) return false;
+    const diasRestantes = this.calcularDiasRestantes(emprestimo.dataPrevistaDevolucao);
+    if (diasRestantes < 0 || diasRestantes > 1) return false;
+    
+    // Verificar se não ultrapassará 30 dias
+    const dataEmprestimo = this.parseDataBrasileira(emprestimo.dataEmprestimo);
+    const dataPrevista = this.parseDataBrasileira(emprestimo.dataPrevistaDevolucao);
+    if (!dataEmprestimo || !dataPrevista) return false;
+    
+    const diasTotais = Math.ceil((dataPrevista.getTime() - dataEmprestimo.getTime()) / (1000 * 60 * 60 * 24));
+    
+    return (diasTotais + 7) <= 30;
+  }
+
+  renovarEmprestimo(emprestimoId: number): void {
+    if (!confirm('Deseja renovar este empréstimo por mais 7 dias?')) return;
+
+    this.emprestimoService.renovarEmprestimo(emprestimoId).subscribe({
+      next: () => {
+        alert('Empréstimo renovado com sucesso!');
+        this.carregarEmprestimos();
+      },
+      error: (err) => {
+        console.error('Erro ao renovar empréstimo:', err);
+        alert(err.error?.message || 'Erro ao renovar empréstimo. Verifique as regras de renovação.');
+      }
+    });
+  }
+
+  devolverLivro(emprestimoId: number): void {
+    if (!confirm('Confirma a devolução deste livro?')) return;
+
+    this.emprestimoService.devolverLivro(emprestimoId).subscribe({
+      next: () => {
+        alert('Livro devolvido com sucesso!');
+        this.carregarEmprestimos();
+      },
+      error: (err) => {
+        console.error('Erro ao devolver livro:', err);
+        alert('Erro ao devolver livro. Tente novamente.');
+      }
+    });
   }
 }

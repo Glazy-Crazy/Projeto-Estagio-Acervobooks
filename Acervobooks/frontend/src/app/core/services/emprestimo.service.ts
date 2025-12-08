@@ -36,11 +36,10 @@ export class EmprestimoService {
     return this.http.get<Emprestimo[]>(`${this.apiUrl}/status/${status}`);
   }
 
-  realizarEmprestimo(usuarioId: number, livroId: number, diasEmprestimo: number = 14): Observable<Emprestimo> {
+  realizarEmprestimo(usuarioId: number, livroId: number): Observable<Emprestimo> {
     const params = new HttpParams()
       .set('usuarioId', usuarioId.toString())
-      .set('livroId', livroId.toString())
-      .set('diasEmprestimo', diasEmprestimo.toString());
+      .set('livroId', livroId.toString());
     
     return this.http.post<Emprestimo>(`${this.apiUrl}/realizar`, null, { params });
   }
@@ -49,8 +48,15 @@ export class EmprestimoService {
     return this.http.put<Emprestimo>(`${this.apiUrl}/${emprestimoId}/devolver`, null);
   }
 
-  renovarEmprestimo(emprestimoId: number, diasAdicionais: number = 7): Observable<Emprestimo> {
-    const params = new HttpParams().set('diasAdicionais', diasAdicionais.toString());
-    return this.http.put<Emprestimo>(`${this.apiUrl}/${emprestimoId}/renovar`, null, { params });
+  renovarEmprestimo(emprestimoId: number): Observable<Emprestimo> {
+    return this.http.put<Emprestimo>(`${this.apiUrl}/${emprestimoId}/renovar`, null);
+  }
+
+  podeRenovar(emprestimoId: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/${emprestimoId}/pode-renovar`);
+  }
+
+  calcularDiasRestantes(emprestimoId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/${emprestimoId}/dias-restantes`);
   }
 }

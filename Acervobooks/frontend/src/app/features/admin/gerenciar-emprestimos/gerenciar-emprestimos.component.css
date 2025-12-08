@@ -407,6 +407,72 @@
   color: #79c0ff;
 }
 
+/* Ações */
+.acoes-buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.btn-renovar,
+.btn-devolver {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-renovar {
+  background: #0969da;
+  color: white;
+}
+
+.btn-renovar:hover {
+  background: #0550ae;
+  transform: translateY(-1px);
+}
+
+:host-context(.dark-mode) .btn-renovar {
+  background: #1f6feb;
+}
+
+:host-context(.dark-mode) .btn-renovar:hover {
+  background: #388bfd;
+}
+
+.btn-devolver {
+  background: #1a7f37;
+  color: white;
+}
+
+.btn-devolver:hover {
+  background: #116329;
+  transform: translateY(-1px);
+}
+
+:host-context(.dark-mode) .btn-devolver {
+  background: #238636;
+}
+
+:host-context(.dark-mode) .btn-devolver:hover {
+  background: #2ea043;
+}
+
+.texto-devolvido {
+  font-size: 0.75rem;
+  color: #57606a;
+  font-style: italic;
+}
+
+:host-context(.dark-mode) .texto-devolvido {
+  color: #8b949e;
+}
+
 /* Loading & Error */
 .loading-container,
 .error-container,

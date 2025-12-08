@@ -195,7 +195,7 @@ export class MeuPerfilComponent implements OnInit {
         }
 
         // Se tiver menos de 3, permite alugar
-        this.emprestimoService.realizarEmprestimo(this.usuarioId, livroId, 14).subscribe({
+        this.emprestimoService.realizarEmprestimo(this.usuarioId, livroId).subscribe({
           next: () => {
             console.log('Livro alugado com sucesso!');
             this.mostrarPopup('Livro alugado com sucesso!', 'sucesso');

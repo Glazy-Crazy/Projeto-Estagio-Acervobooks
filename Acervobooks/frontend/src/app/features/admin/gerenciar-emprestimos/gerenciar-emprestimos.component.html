@@ -103,6 +103,7 @@
             <th>Prazo Devolução</th>
             <th>Dias Restantes</th>
             <th>Status</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -130,6 +131,27 @@
               <span class="status-badge" [ngClass]="getStatusClass(emprestimo.status)">
                 {{ getStatusLabel(emprestimo.status) }}
               </span>
+            </td>
+            <td>
+              <div class="acoes-buttons">
+                <button 
+                  *ngIf="podeRenovar(emprestimo)"
+                  (click)="renovarEmprestimo(emprestimo.id!)"
+                  class="btn-renovar"
+                  title="Renovar por +7 dias">
+                  🔄 Renovar
+                </button>
+                <button 
+                  *ngIf="emprestimo.status === 'ATIVO'"
+                  (click)="devolverLivro(emprestimo.id!)"
+                  class="btn-devolver"
+                  title="Devolver livro">
+                  ✓ Devolver
+                </button>
+                <span *ngIf="emprestimo.status === 'DEVOLVIDO'" class="texto-devolvido">
+                  Devolvido em {{ formatarData(emprestimo.dataEfetivaDevolucao!) }}
+                </span>
+              </div>
             </td>
           </tr>
         </tbody>

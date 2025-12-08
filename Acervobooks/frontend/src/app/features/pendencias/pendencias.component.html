@@ -3,36 +3,87 @@
 
   <div class="container">
   <div class="header">
-    <h1>⚠️ Pendências</h1>
-    <p class="subtitle">Livros com devolução atrasada</p>
+    <h1>📚 Meus Empréstimos</h1>
+    <p class="subtitle">Acompanhe seus empréstimos e prazos de devolução</p>
+  </div>
+
+  <!-- Mensagens -->
+  <div *ngIf="mensagemSucesso" class="alert alert-success">
+    ✓ {{ mensagemSucesso }}
+  </div>
+
+  <div *ngIf="mensagemErro" class="alert alert-error">
+    ✗ {{ mensagemErro }}
   </div>
 
   <div *ngIf="loading" class="loading">Carregando...</div>
 
-  <div *ngIf="!loading && pendencias.length === 0" class="empty success">
-    <h2>✅ Nenhuma pendência!</h2>
-    <p>Parabéns! Você está em dia com suas devoluções</p>
+  <!-- Empréstimos Ativos -->
+  <div *ngIf="!loading && emprestimosAtivos.length > 0">
+    <h2 class="section-title">✅ Empréstimos Ativos</h2>
+    <div class="pendencias-list">
+      <div *ngFor="let emp of emprestimosAtivos" class="pendencia-card" [class.ultimo-dia]="calcularDiasRestantes(emp.dataPrevistaDevolucao) <= 1">
+        <div class="capa">
+          <img [src]="emp.livroCapaUrl || 'assets/book-placeholder.png'" [alt]="emp.livroTitulo" />
+        </div>
+        <div class="info">
+          <h3>{{ emp.livroTitulo }}</h3>
+          <p class="autor">{{ emp.livroAutor }}</p>
+          <p class="data-emprestimo">📅 Emprestado em: {{ formatDate(emp.dataEmprestimo) }}</p>
+          <p class="data-prevista">📆 Devolução prevista: {{ formatDate(emp.dataPrevistaDevolucao) }}</p>
+          <div class="alerta-container">
+            <span class="dias-restantes" [class.ultimo-dia]="calcularDiasRestantes(emp.dataPrevistaDevolucao) <= 1">
+              {{ calcularDiasRestantes(emp.dataPrevistaDevolucao) }} 
+              {{ calcularDiasRestantes(emp.dataPrevistaDevolucao) === 1 ? 'dia restante' : 'dias restantes' }}
+            </span>
+          </div>
+          <div class="acoes">
+            <button class="btn-devolver" (click)="devolverLivro(emp.id!)">
+              🔄 Devolver
+            </button>
+            <button 
+              *ngIf="podeRenovar(emp)" 
+              class="btn-renovar" 
+              (click)="renovarEmprestimo(emp.id!)">
+              ⏰ Renovar (+7 dias)
+            </button>
+            <span *ngIf="!podeRenovar(emp) && calcularDiasRestantes(emp.dataPrevistaDevolucao) > 1" class="info-renovacao">
+              Renovação disponível no último dia
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div *ngIf="!loading && pendencias.length > 0" class="pendencias-list">
-    <div *ngFor="let pend of pendencias" class="pendencia-card atrasada">
-      <div class="capa">
-        <img [src]="pend.livroCapaUrl || 'assets/book-placeholder.png'" [alt]="pend.livroTitulo" />
-      </div>
-      <div class="info">
-        <h3>{{ pend.livroTitulo }}</h3>
-        <p class="autor">{{ pend.livroAutor }}</p>
-        <p class="data-emprestimo">📅 Emprestado em: {{ pend.dataEmprestimo }}</p>
-        <p class="data-prevista">📆 Devolução prevista: {{ pend.dataPrevistaDevolucao }}</p>
-        <div class="alerta-container">
-          <span class="alerta-badge">❌ Data Expirada</span>
-          <span class="dias-atraso">Atraso detectado</span>
+  <!-- Pendências (Atrasados) -->
+  <div *ngIf="!loading && pendencias.length > 0" style="margin-top: 2rem;">
+    <h2 class="section-title">⚠️ Pendências (Em Atraso)</h2>
+    <div class="pendencias-list">
+      <div *ngFor="let pend of pendencias" class="pendencia-card atrasada">
+        <div class="capa">
+          <img [src]="pend.livroCapaUrl || 'assets/book-placeholder.png'" [alt]="pend.livroTitulo" />
         </div>
-        <button class="btn-devolver" (click)="devolverLivro(pend.id!)">
-          🔄 Devolver Agora
-        </button>
+        <div class="info">
+          <h3>{{ pend.livroTitulo }}</h3>
+          <p class="autor">{{ pend.livroAutor }}</p>
+          <p class="data-emprestimo">📅 Emprestado em: {{ formatDate(pend.dataEmprestimo) }}</p>
+          <p class="data-prevista">📆 Devolução prevista: {{ formatDate(pend.dataPrevistaDevolucao) }}</p>
+          <div class="alerta-container">
+            <span class="alerta-badge">❌ ATRASADO</span>
+            <span class="dias-atraso">{{ calcularDiasAtraso(pend.dataPrevistaDevolucao) }} dias de atraso</span>
+          </div>
+          <button class="btn-devolver" (click)="devolverLivro(pend.id!)">
+            🔄 Devolver Agora
+          </button>
+        </div>
       </div>
     </div>
-    </div>
-</div>
+  </div>
+
+  <div *ngIf="!loading && pendencias.length === 0 && emprestimosAtivos.length === 0" class="empty success">
+    <h2>✅ Nenhum empréstimo ativo</h2>
+    <p>Você não possui livros emprestados no momento</p>
+  </div>
+  </div>
 </div>

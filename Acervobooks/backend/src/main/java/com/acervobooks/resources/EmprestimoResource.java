@@ -81,12 +81,11 @@ public class EmprestimoResource {
     }
 
     @PostMapping(value = "/realizar")
-    @Operation(summary = "Realizar novo empréstimo")
+    @Operation(summary = "Realizar novo empréstimo (prazo padrão: 7 dias)")
     public ResponseEntity<EmprestimoDTO> realizarEmprestimo(
             @RequestParam Long usuarioId,
-            @RequestParam Long livroId,
-            @RequestParam(required = false, defaultValue = "14") Integer diasEmprestimo) {
-        Emprestimo obj = emprestimoService.realizarEmprestimo(usuarioId, livroId, diasEmprestimo);
+            @RequestParam Long livroId) {
+        Emprestimo obj = emprestimoService.realizarEmprestimo(usuarioId, livroId, 7);
         URI uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/emprestimos/{id}")
                 .buildAndExpand(obj.getId())
@@ -108,5 +107,19 @@ public class EmprestimoResource {
             @RequestParam(required = false, defaultValue = "7") Integer diasAdicionais) {
         Emprestimo obj = emprestimoService.renovarEmprestimo(id, diasAdicionais);
         return ResponseEntity.ok().body(new EmprestimoDTO(obj));
+    }
+
+    @GetMapping(value = "/{id}/pode-renovar")
+    @Operation(summary = "Verificar se empréstimo pode ser renovado")
+    public ResponseEntity<Boolean> podeRenovar(@PathVariable Long id) {
+        boolean podeRenovar = emprestimoService.podeRenovar(id);
+        return ResponseEntity.ok().body(podeRenovar);
+    }
+
+    @GetMapping(value = "/{id}/dias-restantes")
+    @Operation(summary = "Calcular dias restantes para devolução")
+    public ResponseEntity<Long> calcularDiasRestantes(@PathVariable Long id) {
+        long diasRestantes = emprestimoService.calcularDiasRestantes(id);
+        return ResponseEntity.ok().body(diasRestantes);
     }
 }

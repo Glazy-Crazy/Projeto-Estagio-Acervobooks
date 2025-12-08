@@ -42,6 +42,36 @@ body.dark-mode .subtitle {
   color: #a0aec0;
 }
 
+/* Alertas */
+.alert {
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.alert-success {
+  background: #48bb78;
+  color: white;
+}
+
+.alert-error {
+  background: #f56565;
+  color: white;
+}
+
+/* Section Title */
+.section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0 0 20px 0;
+}
+
+body.dark-mode .section-title {
+  color: #e2e8f0;
+}
+
 .loading, .empty {
   text-align: center;
   padding: 60px 20px;
@@ -84,6 +114,16 @@ body.dark-mode .pendencia-card {
 body.dark-mode .pendencia-card.atrasada {
   background: #2a1a1a;
   border-color: #e53e3e;
+}
+
+.pendencia-card.ultimo-dia {
+  border-color: #f59e0b;
+  background: #fffbeb;
+}
+
+body.dark-mode .pendencia-card.ultimo-dia {
+  background: #2a2310;
+  border-color: #f59e0b;
 }
 
 .capa {
@@ -168,6 +208,50 @@ body.dark-mode .dias-atraso {
   color: #fc8181;
 }
 
+.dias-restantes {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2f855a;
+  background: #c6f6d5;
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-align: center;
+  display: inline-block;
+}
+
+body.dark-mode .dias-restantes {
+  background: #1a4a2f;
+  color: #9ae6b4;
+}
+
+.dias-restantes.ultimo-dia {
+  color: #c05621;
+  background: #feebc8;
+}
+
+body.dark-mode .dias-restantes.ultimo-dia {
+  background: #4a2f1a;
+  color: #fbd38d;
+}
+
+.acoes {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.info-renovacao {
+  font-size: 12px;
+  color: #718096;
+  font-style: italic;
+}
+
+body.dark-mode .info-renovacao {
+  color: #a0aec0;
+}
+
 .btn-devolver {
   width: 100%;
   padding: 12px;
@@ -184,4 +268,35 @@ body.dark-mode .dias-atraso {
 .btn-devolver:hover {
   background: #c53030;
   transform: translateY(-2px);
+}
+
+.btn-renovar {
+  flex: 1;
+  padding: 12px;
+  background: #48bb78;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-renovar:hover {
+  background: #38a169;
+  transform: translateY(-2px);
+}
+
+body.dark-mode .btn-renovar {
+  background: #2f855a;
+}
+
+body.dark-mode .btn-renovar:hover {
+  background: #276749;
+}
+
+.acoes .btn-devolver {
+  flex: 1;
+  width: auto;
 }

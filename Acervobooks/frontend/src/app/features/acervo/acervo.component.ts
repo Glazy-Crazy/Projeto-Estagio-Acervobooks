@@ -146,9 +146,9 @@ export class AcervoComponent implements OnInit {
       return;
     }
 
-    this.emprestimoService.realizarEmprestimo(this.usuarioId, livroId, 14).subscribe({
+    this.emprestimoService.realizarEmprestimo(this.usuarioId, livroId).subscribe({
       next: () => {
-        this.mostrarToast('Livro alugado com sucesso!', 'sucesso');
+        this.mostrarToast('Livro alugado com sucesso! Prazo: 7 dias', 'sucesso');
         this.carregarLivros(); // Recarrega para atualizar disponibilidade
       },
       error: (err: any) => {

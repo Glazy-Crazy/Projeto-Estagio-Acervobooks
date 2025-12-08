@@ -68,12 +68,12 @@ public class EmprestimoService {
             throw new BusinessException("Usuário possui livros em atraso. Regularize a situação antes de realizar novo empréstimo!");
         }
 
-        // Criar empréstimo
+        // Criar empréstimo com prazo padrão de 7 dias
         Emprestimo emprestimo = new Emprestimo();
         emprestimo.setUsuario(usuario);
         emprestimo.setLivro(livro);
         emprestimo.setDataEmprestimo(LocalDate.now());
-        emprestimo.setDataPrevistaDevolucao(LocalDate.now().plusDays(diasEmprestimo != null ? diasEmprestimo : 15));
+        emprestimo.setDataPrevistaDevolucao(LocalDate.now().plusDays(7));
         emprestimo.setStatus(StatusEmprestimo.ATIVO);
 
         // Atualizar quantidade disponível
@@ -116,8 +116,25 @@ public class EmprestimoService {
             throw new BusinessException("Não é possível renovar empréstimos em atraso!");
         }
 
+        // Permitir renovação apenas no último dia (ou quando faltar 1 dia)
+        long diasRestantes = java.time.temporal.ChronoUnit.DAYS.between(LocalDate.now(), emprestimo.getDataPrevistaDevolucao());
+        if (diasRestantes > 1) {
+            throw new BusinessException("A renovação só pode ser feita no último dia do prazo de devolução!");
+        }
+
+        // Verificar se não ultrapassará 30 dias desde o empréstimo
+        long diasTotaisAposRenovacao = java.time.temporal.ChronoUnit.DAYS.between(
+            emprestimo.getDataEmprestimo(), 
+            emprestimo.getDataPrevistaDevolucao().plusDays(7)
+        );
+        
+        if (diasTotaisAposRenovacao > 30) {
+            throw new BusinessException("Não é possível renovar! O prazo total de empréstimo não pode ultrapassar 30 dias.");
+        }
+
+        // Renovar por 7 dias adicionais
         emprestimo.setDataPrevistaDevolucao(
-            emprestimo.getDataPrevistaDevolucao().plusDays(diasAdicionais != null ? diasAdicionais : 7)
+            emprestimo.getDataPrevistaDevolucao().plusDays(7)
         );
 
         return emprestimoRepository.save(emprestimo);
@@ -129,5 +146,42 @@ public class EmprestimoService {
             emp.setStatus(StatusEmprestimo.ATRASADO);
             emprestimoRepository.save(emp);
         });
+    }
+
+    public boolean podeRenovar(Long emprestimoId) {
+        try {
+            Emprestimo emprestimo = findById(emprestimoId);
+            
+            // Verificar se está ativo
+            if (emprestimo.getStatus() != StatusEmprestimo.ATIVO) {
+                return false;
+            }
+            
+            // Verificar se está atrasado
+            if (emprestimo.getDataPrevistaDevolucao().isBefore(LocalDate.now())) {
+                return false;
+            }
+            
+            // Verificar se está no último dia
+            long diasRestantes = java.time.temporal.ChronoUnit.DAYS.between(LocalDate.now(), emprestimo.getDataPrevistaDevolucao());
+            if (diasRestantes > 1) {
+                return false;
+            }
+            
+            // Verificar se não ultrapassará 30 dias
+            long diasTotaisAposRenovacao = java.time.temporal.ChronoUnit.DAYS.between(
+                emprestimo.getDataEmprestimo(), 
+                emprestimo.getDataPrevistaDevolucao().plusDays(7)
+            );
+            
+            return diasTotaisAposRenovacao <= 30;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public long calcularDiasRestantes(Long emprestimoId) {
+        Emprestimo emprestimo = findById(emprestimoId);
+        return java.time.temporal.ChronoUnit.DAYS.between(LocalDate.now(), emprestimo.getDataPrevistaDevolucao());
     }
 }

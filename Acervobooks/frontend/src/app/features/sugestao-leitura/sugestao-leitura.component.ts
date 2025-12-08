@@ -89,7 +89,7 @@ export class SugestaoLeituraComponent implements OnInit {
         }
 
         // Se tiver menos de 3, permite alugar
-        this.emprestimoService.realizarEmprestimo(this.usuarioId, livroId, 15).subscribe({
+        this.emprestimoService.realizarEmprestimo(this.usuarioId, livroId).subscribe({
           next: () => {
             this.mostrarPopup('Livro alugado com sucesso!', 'sucesso');
             // Carregar nova sugestão após alugar

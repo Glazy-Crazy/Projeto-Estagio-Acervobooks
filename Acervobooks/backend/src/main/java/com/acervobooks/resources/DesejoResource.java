@@ -1,6 +1,7 @@
 package com.acervobooks.resources;
 
 import com.acervobooks.domains.Desejo;
+import com.acervobooks.domains.dtos.DesejoDTO;
 import com.acervobooks.services.DesejoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/desejos")
@@ -35,9 +37,12 @@ public class DesejoResource {
 
     @GetMapping(value = "/usuario/{usuarioId}")
     @Operation(summary = "Listar desejos de um usuário")
-    public ResponseEntity<List<Desejo>> findByUsuario(@PathVariable Long usuarioId) {
+    public ResponseEntity<List<DesejoDTO>> findByUsuario(@PathVariable Long usuarioId) {
         List<Desejo> list = desejoService.findByUsuario(usuarioId);
-        return ResponseEntity.ok().body(list);
+        List<DesejoDTO> listDTO = list.stream()
+                .map(DesejoDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDTO);
     }
 
     @GetMapping(value = "/usuario/{usuarioId}/livro/{livroId}/exists")

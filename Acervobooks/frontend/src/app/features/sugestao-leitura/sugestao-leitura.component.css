@@ -14,6 +14,18 @@
   max-width: 1400px;
   margin: 0 auto;
   width: 100%;
+  transition: margin-left 0.3s ease, background-color 0.3s ease;
+  margin-left: 240px;
+}
+
+/* Quando sidebar está colapsada */
+:host-context(body.sidebar-collapsed) .container {
+  margin-left: 70px;
+}
+
+/* Quando sidebar está escondida */
+:host-context(body:not(.sidebar-open):not(.sidebar-collapsed)) .container {
+  margin-left: 0;
 }
 
 :host-context(body.dark-mode) .container {

@@ -10,6 +10,11 @@
 .DS_Store
 Thumbs.db
 
+# Arquivos compactados
+*.rar
+*.zip
+*.tar.gz
+
 # Logs
 *.log
 npm-debug.log*

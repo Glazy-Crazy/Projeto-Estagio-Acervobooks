@@ -76,7 +76,7 @@ public class DesejoService {
             return new ToggleResponse(false, "Livro removido da lista de desejos");
         } else {
             // Se não existe, adiciona
-            Desejo novoDesejo = adicionarDesejo(usuarioId, livroId);
+            adicionarDesejo(usuarioId, livroId);
             return new ToggleResponse(true, "Livro adicionado à lista de desejos");
         }
     }

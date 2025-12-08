@@ -104,21 +104,17 @@ body.dark-mode .stat-card {
 }
 
 /* Ajuste de layout para sidebar */
-.page-wrapper {
-  transition: margin-left 0.3s ease;
-}
-
-body.sidebar-open .page-wrapper > *:not(app-sidebar) {
+body.sidebar-open app-root > *:not(app-sidebar) {
   margin-left: 240px;
   transition: margin-left 0.3s ease;
 }
 
-body.sidebar-collapsed .page-wrapper > *:not(app-sidebar) {
+body.sidebar-collapsed app-root > *:not(app-sidebar) {
   margin-left: 70px;
   transition: margin-left 0.3s ease;
 }
 
-body:not(.sidebar-open):not(.sidebar-collapsed) .page-wrapper > *:not(app-sidebar) {
+body:not(.sidebar-open):not(.sidebar-collapsed) app-root > *:not(app-sidebar) {
   margin-left: 0;
   transition: margin-left 0.3s ease;
 }

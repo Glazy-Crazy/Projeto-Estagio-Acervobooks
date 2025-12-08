@@ -48,7 +48,19 @@ export class MeusDesejosComponent implements OnInit {
 
     this.desejoService.findByUsuarioId(this.usuarioId).subscribe({
       next: (desejos) => {
-        this.livros.set(desejos.map(desejo => desejo.livro));
+        this.livros.set(desejos.map(desejo => ({
+          id: desejo.livroId,
+          titulo: desejo.livroTitulo,
+          autor: desejo.livroAutor,
+          genero: desejo.livroGenero,
+          editora: desejo.livroEditora,
+          anoPublicacao: desejo.livroAnoPublicacao,
+          capaUrl: desejo.livroCapaUrl,
+          quantidadeDisponivel: desejo.livroQuantidadeDisponivel,
+          isbn: '',
+          sinopse: '',
+          quantidadeTotal: 0
+        } as Livro)));
         this.loading.set(false);
       },
       error: (err) => {

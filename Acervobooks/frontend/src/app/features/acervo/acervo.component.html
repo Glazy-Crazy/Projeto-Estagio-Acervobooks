@@ -1,6 +1,7 @@
-<app-sidebar></app-sidebar>
 <div class="page-wrapper">
-<div class="acervo-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="acervo-container">
   <div class="header">
     <h1>📚 Acervo de Livros</h1>
     <p class="subtitle">Explore nossa coleção completa</p>
@@ -96,6 +97,6 @@
   <div *ngIf="showToast()" class="toast" [class.success]="toastType() === 'sucesso'" [class.error]="toastType() === 'erro'">
     <span class="icon">{{ toastType() === 'sucesso' ? '✓' : '⚠' }}</span>
     <span>{{ toastMessage() }}</span>
-  </div>
+    </div>
 </div>
 </div>

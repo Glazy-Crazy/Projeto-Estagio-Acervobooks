@@ -1,5 +1,6 @@
 .page-wrapper {
   display: flex;
+  min-height: 100vh;
 }
 
 .perfil-container {
@@ -8,6 +9,18 @@
   width: 100%;
   background: var(--bg-color);
   min-height: 100vh;
+  transition: margin-left 0.3s ease, background-color 0.3s ease;
+  margin-left: 240px;
+}
+
+/* Quando sidebar está colapsada */
+:host-context(body.sidebar-collapsed) .perfil-container {
+  margin-left: 70px;
+}
+
+/* Quando sidebar está escondida */
+:host-context(body:not(.sidebar-open):not(.sidebar-collapsed)) .perfil-container {
+  margin-left: 0;
 }
 
 /* Header do Perfil */

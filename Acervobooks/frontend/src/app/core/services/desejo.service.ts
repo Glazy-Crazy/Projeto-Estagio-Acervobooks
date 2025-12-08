@@ -7,7 +7,13 @@ export interface Desejo {
   id?: number;
   usuarioId: number;
   livroId: number;
-  livro: Livro;
+  livroTitulo: string;
+  livroAutor: string;
+  livroGenero: string;
+  livroEditora: string;
+  livroAnoPublicacao: number;
+  livroCapaUrl: string;
+  livroQuantidadeDisponivel: number;
   dataCriacao?: string;
 }
 

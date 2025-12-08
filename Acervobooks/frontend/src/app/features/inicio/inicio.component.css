@@ -10,6 +10,18 @@
   padding: 2rem;
   background-color: #f5f5f0;
   min-height: 100vh;
+  transition: margin-left 0.3s ease, background-color 0.3s ease;
+  margin-left: 240px;
+}
+
+/* Quando sidebar está colapsada */
+:host-context(body.sidebar-collapsed) .inicio-container {
+  margin-left: 70px;
+}
+
+/* Quando sidebar está escondida */
+:host-context(body:not(.sidebar-open):not(.sidebar-collapsed)) .inicio-container {
+  margin-left: 0;
 }
 
 :host-context(body.dark-mode) .inicio-container {

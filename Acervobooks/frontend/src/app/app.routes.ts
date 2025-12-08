@@ -11,6 +11,7 @@ import { SugestaoLeituraComponent } from './features/sugestao-leitura/sugestao-l
 import { SobreComponent } from './features/sobre/sobre.component';
 import { CadastrarLivroComponent } from './features/admin/cadastrar-livro/cadastrar-livro.component';
 import { EditarLivroComponent } from './features/admin/editar-livro/editar-livro.component';
+import { GerenciarEmprestimosComponent } from './features/admin/gerenciar-emprestimos/gerenciar-emprestimos.component';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -25,5 +26,6 @@ export const routes: Routes = [
   { path: 'sugestao-leitura', component: SugestaoLeituraComponent },
   { path: 'cadastrar-livro', component: CadastrarLivroComponent },
   { path: 'editar-livro', component: EditarLivroComponent },
+  { path: 'gerenciar-emprestimos', component: GerenciarEmprestimosComponent },
   { path: '**', redirectTo: '' }
 ];

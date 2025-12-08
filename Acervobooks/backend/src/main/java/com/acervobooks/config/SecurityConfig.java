@@ -26,15 +26,6 @@ import java.util.Arrays;
 @EnableMethodSecurity // substitui EnableGlobalMethodSecurity (Spring Security 6)
 public class SecurityConfig {
 
-    private static final String[] PUBLIC_URLS = {
-        "/h2-console/**",
-        "/auth/**",          // endpoint de autenticação
-        "/swagger-ui.html",  // Swagger
-        "/swagger-ui/**",
-        "/v3/api-docs/**",
-        "/api-docs/**"
-    };
-
     private final Environment env;
     private final JWTUtils jwtUtils;
     private final UserDetailsServiceImpl userDetailsService;

@@ -1,0 +1,145 @@
+<div class="page-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="gerenciar-emprestimos-container">
+    <!-- Header -->
+    <div class="page-header">
+      <h1>📊 Gerenciar Empréstimos</h1>
+      <p>Visualize e acompanhe todos os empréstimos realizados na biblioteca</p>
+    </div>
+
+  <!-- Estatísticas -->
+  <div class="statistics">
+    <div class="stat-card total">
+      <div class="stat-icon">📚</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ getTotalEmprestimos() }}</span>
+        <span class="stat-label">Total</span>
+      </div>
+    </div>
+
+    <div class="stat-card ativos">
+      <div class="stat-icon">✅</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ getEmprestimosAtivos() }}</span>
+        <span class="stat-label">Ativos</span>
+      </div>
+    </div>
+
+    <div class="stat-card atrasados">
+      <div class="stat-icon">⚠️</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ getEmprestimosAtrasados() }}</span>
+        <span class="stat-label">Atrasados</span>
+      </div>
+    </div>
+
+    <div class="stat-card devolvidos">
+      <div class="stat-icon">🎉</div>
+      <div class="stat-info">
+        <span class="stat-value">{{ getEmprestimosDevolvidos() }}</span>
+        <span class="stat-label">Devolvidos</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filters-section">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input 
+        type="text" 
+        placeholder="Buscar por usuário, livro ou email..."
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()"
+        class="search-input"
+      />
+    </div>
+
+    <div class="filter-group">
+      <label for="status-filter">Status:</label>
+      <select 
+        id="status-filter"
+        [(ngModel)]="filtroStatus"
+        (change)="onStatusChange()"
+        class="status-select"
+      >
+        <option value="TODOS">Todos</option>
+        <option value="ATIVO">Ativos</option>
+        <option value="ATRASADO">Atrasados</option>
+        <option value="DEVOLVIDO">Devolvidos</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Carregando empréstimos...</p>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="error-message">
+    <span class="error-icon">❌</span>
+    <p>{{ errorMessage }}</p>
+    <button (click)="carregarEmprestimos()" class="retry-btn">Tentar Novamente</button>
+  </div>
+
+  <!-- Lista de Empréstimos -->
+  <div *ngIf="!isLoading && !errorMessage" class="emprestimos-list">
+    <div *ngIf="emprestimosFiltrados.length === 0" class="empty-state">
+      <span class="empty-icon">📭</span>
+      <h3>Nenhum empréstimo encontrado</h3>
+      <p>{{ searchTerm ? 'Tente ajustar os filtros de busca' : 'Não há empréstimos cadastrados ainda' }}</p>
+    </div>
+
+    <div class="table-container" *ngIf="emprestimosFiltrados.length > 0">
+      <table class="emprestimos-table">
+        <thead>
+          <tr>
+            <th>Usuário</th>
+            <th>Livro</th>
+            <th>Data Empréstimo</th>
+            <th>Prazo Devolução</th>
+            <th>Dias Restantes</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let emprestimo of emprestimosFiltrados" class="emprestimo-row">
+            <td>
+              <div class="usuario-info">
+                <span class="usuario-nome">{{ emprestimo.usuarioNome || 'N/A' }}</span>
+                <span class="usuario-email">ID: {{ emprestimo.usuarioId }}</span>
+              </div>
+            </td>
+            <td>
+              <div class="livro-info">
+                <span class="livro-titulo">{{ emprestimo.livroTitulo || emprestimo.livro?.titulo || 'N/A' }}</span>
+                <span class="livro-autor">{{ emprestimo.livroAutor || emprestimo.livro?.autor || 'N/A' }}</span>
+              </div>
+            </td>
+            <td>{{ formatarData(emprestimo.dataEmprestimo) }}</td>
+            <td>{{ formatarData(emprestimo.dataPrevistaDevolucao) }}</td>
+            <td>
+              <span class="dias-restantes" [class.atrasado]="calcularDiasRestantes(emprestimo.dataPrevistaDevolucao) < 0">
+                {{ calcularDiasRestantes(emprestimo.dataPrevistaDevolucao) }} dias
+              </span>
+            </td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(emprestimo.status)">
+                {{ getStatusLabel(emprestimo.status) }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Resultados -->
+  <div *ngIf="!isLoading && !errorMessage && emprestimosFiltrados.length > 0" class="results-info">
+    <p>Mostrando {{ emprestimosFiltrados.length }} de {{ emprestimos.length }} empréstimos</p>
+  </div>
+  </div>
+</div>

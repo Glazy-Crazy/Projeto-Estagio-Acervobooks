@@ -58,6 +58,10 @@
     <!-- Menu Admin -->
     <div class="nav-section" *ngIf="isAdmin()">
       <h3 class="section-title" *ngIf="isOpen()">ADMINISTRAÇÃO</h3>
+      <a routerLink="/gerenciar-emprestimos" routerLinkActive="active" class="nav-item admin-item" [title]="!isOpen() ? 'Gerenciar Empréstimos' : ''">
+        <span class="icon">📊</span>
+        <span class="text" *ngIf="isOpen()">Gerenciar Empréstimos</span>
+      </a>
       <a routerLink="/cadastrar-livro" routerLinkActive="active" class="nav-item admin-item" [title]="!isOpen() ? 'Cadastrar Livros' : ''">
         <span class="icon">➕</span>
         <span class="text" *ngIf="isOpen()">Cadastrar Livros</span>

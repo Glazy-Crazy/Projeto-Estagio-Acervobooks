@@ -460,7 +460,7 @@ Contribuições são sempre bem-vindas! Para contribuir:
 
 ## 📝 Licença
 
-Este projeto foi desenvolvido como Trabalho de Conclusão de Curso (TCC) e está sob a licença MIT.
+Este projeto foi desenvolvido como Projeto de estágio e está sob a licença MIT.
 
 ---
 
